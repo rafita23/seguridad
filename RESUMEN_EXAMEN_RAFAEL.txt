@@ -1,0 +1,111 @@
+
+ 1. Encriptación de Contraseñas
+- Técnica Usada: `password_hash` con el algoritmo BCRYPT.
+- Por qué es seguro: 
+  - Las contraseñas nunca se almacenan en texto plano.
+  - El algoritmo BCRYPT genera un hash único para cada contraseña con un "salt" interno, lo que evita ataques de diccionario y rainbow tables.
+
+---000000000000000000000-------0000000000000000000------00000
+
+ 2. Validación y Sanitización de Entradas
+- Técnica Usada:
+  - `trim()` para eliminar espacios innecesarios.
+  - `htmlspecialchars()` para prevenir Cross-Site Scripting (XSS).
+- Por qué es seguro:
+  - Evita que un atacante inyecte código malicioso en los formularios.
+  - Asegura que solo datos válidos ingresen a la base de datos.
+
+---
+---000000000000000000000-------0000000000000000000------00000
+ 3. Protección Contra Duplicidad
+- Técnica Usada: Validación previa con una consulta SQL para verificar si el usuario ya existe.
+- Por qué es seguro:
+  - Previene la creación de múltiples cuentas con el mismo nombre de usuario.
+
+------000000000000000000000-------0000000000000000000------00000
+
+ 4. Protección Contra Fuerza Bruta
+- Técnica Usada:
+  - Límite de intentos de inicio de sesión.
+  - Mensajes genéricos de error para evitar la enumeración de usuarios.
+- Por qué es seguro:
+  - Evita que los atacantes prueben múltiples combinaciones de contraseñas en un periodo corto de tiempo.
+
+------000000000000000000000-------0000000000000000000------00000
+
+ 5. Sesiones Seguras
+- Técnica Usada:
+  - Regeneración de la sesión con `session_regenerate_id()` al inicio de sesión.
+  - Expiración de sesiones inactivas después de un tiempo definido.
+- Por qué es seguro:
+  - Previene secuestros de sesiones al hacerlas únicas y eliminarlas al expirar.
+
+------000000000000000000000-------0000000000000000000------00000
+
+ 6. Prevención de CSRF (Cross-Site Request Forgery)
+- Técnica Usada:
+  - Generación de un token CSRF único por sesión con `random_bytes()`.
+  - Verificación del token en cada formulario.
+- Por qué es seguro:
+  - Evita que un atacante fuerce al usuario a realizar acciones no deseadas en su cuenta.
+
+------000000000000000000000-------0000000000000000000------00000
+
+ 7. Uso de Prepared Statements
+- Técnica Usada: Consultas SQL parametrizadas con `PDO::prepare`.
+- Por qué es seguro:
+  - Previene inyecciones SQL al separar los datos de las consultas SQL.
+
+------000000000000000000000-------0000000000000000000------00000
+
+ 8. Contraseñas Fuertes
+- Técnica Usada:
+  - Validación de contraseñas con requisitos:
+    - Mínimo de 8 caracteres.
+    - Deben incluir números, letras y símbolos.
+- Por qué es seguro:
+  - Aumenta la dificultad para que un atacante adivine o fuerce una contraseña.
+
+------000000000000000000000-------0000000000000000000------00000
+
+ 9. Políticas de Seguridad de Contenido (CSP)
+- Técnica Usada:
+  - Configuración de cabeceras `Content-Security-Policy`.
+- Por qué es seguro:
+  - Mitiga la ejecución de scripts externos y evita ataques de XSS.
+
+------000000000000000000000-------0000000000000000000------00000
+
+ 10. Registro Seguro de Errores
+- Técnica Usada:
+  - Mensajes genéricos de error para usuarios finales.
+  - Registro de detalles en el log del servidor.
+- Por qué es seguro:
+  - Los atacantes no obtienen información sobre la estructura interna del sistema.
+
+------000000000000000000000-------0000000000000000000------00000
+
+ 11. Auditoría y Monitoreo
+- Técnica Usada:
+  - Registro de intentos fallidos en el log del servidor.
+- Por qué es seguro:
+  - Permite identificar comportamientos sospechosos y responder rápidamente a posibles ataques.
+
+------000000000000000000000-------0000000000000000000------00000
+
+ 12. HTTPS (Sugerencia para Producción)
+- Técnica Usada:
+  - Recomendación de usar HTTPS para encriptar la comunicación entre cliente y servidor.
+- Por qué es seguro:
+  - Previene ataques de tipo "Man-in-the-Middle" al asegurar que los datos enviados no sean interceptados.
+
+------000000000000000000000-------0000000000000000000------00000
+
+ Resumen de Seguridad
+El sistema implementa una combinación de medidas técnicas (como hash de contraseñas y prepared statements) y organizativas (como auditoría de errores) para minimizar riesgos como:
+- Fuerza Bruta
+- Cross-Site Scripting (XSS)
+- Cross-Site Request Forgery (CSRF)
+- Inyección SQL
+- Secuestro de Sesiones
+
